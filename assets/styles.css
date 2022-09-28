@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  .grid-layout {
+    --min-width: 280px;
+    --max-width: 100%;
+    --col-gap: 8px;
+    --row-gap: 8px;
+    --cols: 12;
+    --content-width: 1170px;
+    --content-min-width: calc(var(--min-width) - 2 * var(--col-gap));
+    --col-min-width: calc((var(--content-min-width) - (var(--cols) - 1) * var(--col-gap)) / var(--cols));
+    --col-width: calc((var(--content-width) - (var(--cols) - 1) * var(--col-gap)) / var(--cols));
+  }
+  @media screen(md) {
+    .grid-layout {
+      --col-gap: 32px;
+      --row-gap: 32px;
+    }
+  }
+}
+  
+  @layer components {
+    .grid-layout {
+      min-width: var(--content-min-width);
+      max-width: var(--max-width);
+      width: 100%;
+      margin: auto;
+      display: grid;
+      gap: var(--col-gap);
+      grid-template-columns:
+        [full-start] minmax(0,1fr)
+        [content-start] minmax(var(--col-min-width), var(--col-width))
+        repeat(calc(var(--cols) - 2), minmax(var(--col-min-width), var(--col-width)))
+        minmax(var(--col-min-width), var(--col-width))
+        [content-end] minmax(0,1fr)
+        [full-end];
+    }
+
+    .grid-layout > * {
+      grid-column: content;
+    }
+  
+    .grid-layout__content {
+      grid-column: content;
+    }
+
+    .grid-layout__content--full {
+      grid-column: full;
+    }
+
+    .custom-text {
+      color: crimson;
+    }
+
+    .custom-bg {
+      background: tomato;
+    }
+
+    .custom-border {
+      border: 4px solid aquamarine;
+    }
+    
+    .custom-border:hover {
+      border: 4px solid dimgrey;
+    }
+  
+  }
